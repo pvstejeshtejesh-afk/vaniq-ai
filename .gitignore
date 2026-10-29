@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build output
+dist/
+*/dist/
+web/dist/
+
+# Env — never commit real secrets
+.env
+.env.local
+*.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python venv (pre-existing, unused by the Node app)
+voice-agent/venv/
+
+# Editor
+.vscode/
+.idea/
+
+# Stray launch artifacts
+*.err
+*.out

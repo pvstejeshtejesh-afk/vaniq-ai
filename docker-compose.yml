@@ -1,0 +1,38 @@
+version: "3.8"
+
+# Full-stack dev: API + web + MongoDB.
+# The API defaults to the in-memory store; set STORAGE=mongo below to persist.
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  api:
+    build: ./server
+    restart: unless-stopped
+    environment:
+      PORT: "4000"
+      STORAGE: "mongo"
+      MONGODB_URI: "mongodb://mongo:27017/vaniq"
+      JWT_SECRET: "change-me-to-a-long-random-string-32-chars"
+      CORS_ORIGIN: "http://localhost:5173"
+      OUTBOUND_CALLING_ENABLED: "false"
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongo
+
+  web:
+    build: ./web
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+
+volumes:
+  mongo_data:

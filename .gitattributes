@@ -1,0 +1,9 @@
+# Normalize line endings — commit LF, checkout native (silences CRLF warnings).
+* text=auto
+
+# Explicitly treat these as binary.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.pdf binary
