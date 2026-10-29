@@ -50,7 +50,7 @@ transcript, summary, intent score, and the wallet charge.
 
 ```bash
 cd server
-npm test          # 28 integration tests (Vitest + Supertest), all providers mocked
+npm test          # 40 integration tests (Vitest + Supertest), all providers mocked
 npm run typecheck # backend type safety
 ```
 
@@ -135,6 +135,18 @@ docs/                   # API, provider, and security documentation
 - [`docs/SECURITY.md`](docs/SECURITY.md) — security & production-readiness checklist.
 - [`PROJECT_AUDIT.md`](PROJECT_AUDIT.md) — audit of the starting state.
 - [`IMPLEMENTATION_PLAN.md`](IMPLEMENTATION_PLAN.md) — phased plan and status.
+
+---
+
+## Continuous integration
+
+Every push and pull request to `main` runs [`.github/workflows/ci.yml`](.github/workflows/ci.yml):
+
+- **Backend** — `npm ci` → `npm run typecheck` → `npm test` (40 integration tests, providers mocked).
+- **Frontend** — `npm ci` → `npm run build` (typecheck + Vite production build).
+
+No secrets are required for CI — all external providers are mocked, so the pipeline runs green
+on a clean clone. Node 20.
 
 ---
 
