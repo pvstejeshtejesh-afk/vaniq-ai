@@ -12,6 +12,9 @@ const EnvSchema = z.object({
     .string()
     .default('false')
     .transform((v) => v === 'true'),
+  // "lax" for same-site (dev proxy / single domain). Set "none" + COOKIE_SECURE=true
+  // when the frontend and API are on different domains (e.g. Vercel + Render).
+  COOKIE_SAMESITE: z.enum(['lax', 'strict', 'none']).default('lax'),
   CORS_ORIGIN: z.string().default('http://localhost:5173'),
   // Providers (all optional — mocked when absent)
   LLM_PROVIDER: z.string().default('mock'),

@@ -1,5 +1,9 @@
 // Thin fetch wrapper for the Vaniq API. Always sends cookies (session auth).
-const BASE = '/api';
+// In dev, Vite proxies `/api` to the backend (see vite.config.ts). In production the
+// frontend and API may live on different domains — set VITE_API_BASE (e.g.
+// https://vaniq-api.onrender.com/api) at build time.
+const BASE = (import.meta.env.VITE_API_BASE as string | undefined) ?? '/api';
+export const API_BASE = BASE;
 
 export class ApiClientError extends Error {
   status: number;

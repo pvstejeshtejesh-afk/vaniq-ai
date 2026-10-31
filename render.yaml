@@ -1,0 +1,35 @@
+# Render Blueprint — deploys the Vaniq API from this repo.
+# Dashboard → New → Blueprint → select this repository.
+# After it provisions, copy the API URL into Vercel's VITE_API_BASE
+# and set CORS_ORIGIN here to the Vercel URL, then trigger a re-deploy.
+
+services:
+  - type: web
+    name: vaniq-api
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # In-memory store (default) survives on the free plan but resets on
+      # redeploy/restart. Switch to mongo + MONGODB_URI for real persistence.
+      - key: STORAGE
+        value: memory
+      - key: MONGODB_URI
+        sync: false # paste your MongoDB Atlas connection string
+      - key: JWT_SECRET
+        generateValue: true
+      - key: COOKIE_SECURE
+        value: "true"
+      # Frontend (Vercel) and API (Render) are on different domains —
+      # cross-site cookies require SameSite=None + Secure.
+      - key: COOKIE_SAMESITE
+        value: none
+      - key: CORS_ORIGIN
+        sync: false # paste your Vercel URL, e.g. https://vaniq-ai.vercel.app
+      - key: OUTBOUND_CALLING_ENABLED
+        value: "false"

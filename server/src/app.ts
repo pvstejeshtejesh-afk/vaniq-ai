@@ -150,7 +150,7 @@ export function createApp(store: Store) {
       const token = signToken({ sub: user.id, businessId: null });
       res.cookie(cookieName, token, {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: env().COOKIE_SAMESITE,
         secure: env().COOKIE_SECURE,
         maxAge: env().JWT_EXPIRES_MIN * 60 * 1000,
       });
@@ -176,7 +176,7 @@ export function createApp(store: Store) {
       const token = signToken({ sub: user.id, businessId: user.businessId });
       res.cookie(cookieName, token, {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: env().COOKIE_SAMESITE,
         secure: env().COOKIE_SECURE,
         maxAge: env().JWT_EXPIRES_MIN * 60 * 1000,
       });

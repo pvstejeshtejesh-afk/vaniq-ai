@@ -75,6 +75,42 @@ Then `npm run dev` in `server/` connects via Mongoose and creates indexes automa
 
 ---
 
+## Deploy (Render + Vercel + Atlas, free tiers)
+
+The repo is set up for a split deploy: **API on Render**, **UI on Vercel**, **data on
+MongoDB Atlas**. A [`render.yaml`](render.yaml) blueprint and [`web/vercel.json`](web/vercel.json)
+are included.
+
+### 1. MongoDB Atlas (data)
+1. Create a free cluster at [mongodb.com/atlas](https://www.mongodb.com/atlas).
+2. Database Access → add a user. Network Access → allow your deploy platform (or `0.0.0.0/0`).
+3. Connect → Drivers → copy the connection string (looks like
+   `mongodb+srv://user:pass@cluster…/vaniq`).
+
+### 2. Render (API)
+1. Dashboard → **New → Blueprint** → connect this repo. Render reads `render.yaml` and
+   provisions the API (Node, free plan, health check at `/api/health`).
+2. When prompted, set the two `sync: false` vars:
+   - `MONGODB_URI` — the Atlas string from step 1 (or leave `STORAGE=memory` for a demo).
+   - `CORS_ORIGIN` — your Vercel URL from step 3 (e.g. `https://vaniq-ai.vercel.app`).
+3. Deploy. Note the API URL, e.g. `https://vaniq-api.onrender.com`.
+
+### 3. Vercel (frontend)
+1. **Import Project** → this repo → set **Root Directory** to `web` (framework auto-detects Vite).
+2. Add one environment variable (build-time):
+   - `VITE_API_BASE` = `https://vaniq-api.onrender.com/api` (your Render URL + `/api`).
+3. Deploy. Open the URL, register, and the dashboard talks to the Render API.
+
+> **Split-domain cookies:** because the UI and API are on different domains, Render runs with
+> `COOKIE_SECURE=true` + `COOKIE_SAMESITE=none` (set by `render.yaml`) so the session cookie
+> is sent cross-site. Locally nothing changes — dev keeps `lax`.
+
+> **Free-plan caveat:** Render's free web service sleeps after inactivity and redeploys wipe
+> the in-memory store. For anything real, keep `STORAGE=mongo` + Atlas (already the blueprint
+> default once you paste `MONGODB_URI`).
+
+---
+
 ## Project structure
 
 ```

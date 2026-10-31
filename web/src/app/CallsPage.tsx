@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../lib/api';
+import { API_BASE } from '../lib/api';
 import type { Call } from '../lib/types';
 import { PageHeader } from '../components/PageHeader';
 import { EmptyState } from '../components/EmptyState';
@@ -57,7 +58,7 @@ export function CallsPage() {
   async function exportCsv() {
     setExporting(true);
     try {
-      const res = await fetch('/api/calls/export', { credentials: 'include' });
+      const res = await fetch(`${API_BASE}/calls/export`, { credentials: 'include' });
       if (!res.ok) throw new Error('Export failed');
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
