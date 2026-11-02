@@ -7,7 +7,7 @@ import { useToast } from '../components/Toast';
 export function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation() as { state?: { from?: { pathname: string } } };
-  const { refresh } = useAuth();
+  const { refresh, startDemo } = useAuth();
   const { push } = useToast();
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
@@ -27,6 +27,12 @@ export function LoginPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function handleDemoAccess() {
+    await startDemo();
+    push('success', 'Welcome to Vaniq.Ai Demo Dashboard!');
+    navigate('/app', { replace: true });
   }
 
   return (
@@ -62,6 +68,23 @@ export function LoginPage() {
         </div>
         <button className="btn-primary w-full" disabled={loading}>
           {loading ? 'Signing in…' : 'Sign in'}
+        </button>
+
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-slate-200" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-white px-2 text-slate-400">or explore live</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleDemoAccess}
+          className="btn-secondary w-full border-brand-200 text-brand-700 hover:bg-brand-50"
+        >
+          ✦ One-Click Demo Mode (Instant Access)
         </button>
       </form>
       <p className="mt-6 text-center text-sm text-slate-500">

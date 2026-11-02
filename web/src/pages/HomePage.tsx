@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from '../lib/auth';
 
 const INDUSTRIES = [
   { title: 'Real Estate & Builders', desc: 'Qualifies Facebook & portal leads, captures budget and location, books weekend site visits.', code: "O' Shanthi", time: '1:21' },
@@ -19,6 +20,13 @@ const FAQS = [
 
 export function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const navigate = useNavigate();
+  const { startDemo } = useAuth();
+
+  const handleLaunchDemo = async () => {
+    await startDemo();
+    navigate('/app');
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -36,6 +44,12 @@ export function HomePage() {
             <a href="#faq" className="hover:text-brand-700">FAQ</a>
           </nav>
           <div className="flex items-center gap-2">
+            <button
+              onClick={handleLaunchDemo}
+              className="hidden sm:inline-flex rounded-xl border border-brand-200 bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-700 hover:bg-brand-100 transition"
+            >
+              ✦ Live Demo
+            </button>
             <Link to="/login" className="rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
               Sign in
             </Link>
@@ -66,6 +80,12 @@ export function HomePage() {
               <Link to="/register" className="btn-primary px-6 py-3.5 text-base">
                 Get Started Free →
               </Link>
+              <button
+                onClick={handleLaunchDemo}
+                className="btn-secondary px-6 py-3.5 text-base border-brand-200 text-brand-700 hover:bg-brand-50"
+              >
+                ✦ Explore Live Demo
+              </button>
               <a href="#pricing" className="btn-secondary px-6 py-3.5 text-base">
                 View Pricing
               </a>

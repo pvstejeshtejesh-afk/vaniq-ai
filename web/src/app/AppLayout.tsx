@@ -16,7 +16,7 @@ const NAV = [
 ];
 
 export function AppLayout() {
-  const { user, business, logout } = useAuth();
+  const { user, business, logout, isDemo } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
@@ -104,6 +104,24 @@ export function AppLayout() {
 
         {/* Main */}
         <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
+          {isDemo && (
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-brand-200 bg-brand-50/80 px-4 py-3 text-xs text-brand-900 shadow-sm">
+              <div className="flex items-center gap-2">
+                <span className="rounded-md bg-brand-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                  ✦ Demo Mode
+                </span>
+                <span className="font-medium text-slate-700">
+                  Exploring with full interactive sample data. Real Telugu AI employees, calls, leads, and wallet enabled.
+                </span>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="rounded-lg border border-brand-300 bg-white px-2.5 py-1 text-xs font-semibold text-brand-700 hover:bg-brand-100 transition"
+              >
+                Exit Demo
+              </button>
+            </div>
+          )}
           <Outlet />
         </main>
       </div>

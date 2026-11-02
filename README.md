@@ -1,9 +1,14 @@
 # Vaniq.Ai
 
+[![CI & Deploy](https://github.com/pvstejeshtejesh-afk/vaniq-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/pvstejeshtejesh-afk/vaniq-ai/actions/workflows/ci.yml)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-6366f1)](https://pvstejeshtejesh-afk.github.io/vaniq-ai/)
+
 **AI voice employees for Indian businesses.** Every lead gets a fast response from an AI
 employee that never misses a follow-up — speaking **Telugu, English & Tenglish**, qualifying
 customers, booking appointments, and saving call summaries to a business dashboard.
 
+> 🌐 **Live Demo:** [https://pvstejeshtejesh-afk.github.io/vaniq-ai/](https://pvstejeshtejesh-afk.github.io/vaniq-ai/)
+>
 > Primary market: Andhra Pradesh & Telangana, India.
 
 ---
